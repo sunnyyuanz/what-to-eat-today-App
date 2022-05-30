@@ -32,6 +32,7 @@ for (i = 0; i < foodList.length; i++) {
 //determine which food has the highest healthiness score and add the comment below that food. 
     if(score>4 && score>foodList[i+1].healthiness_score){
         const div = document.createElement("div");
+        div.classList.add("comment");
         const divhtml = `This looks healthy and yummy. Let's eat ${name} today!`;
         div.innerHTML = divhtml;
         node.appendChild(div)
