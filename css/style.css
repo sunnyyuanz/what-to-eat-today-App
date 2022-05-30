@@ -1,0 +1,26 @@
+html, body{
+    height: 100%;
+    margin: 0;
+}
+.backgroundline1{
+    border-top: solid 10px brown;
+    z-index: -1;
+    position: relative;
+    top: 50px;
+}
+
+.backgroundline2{
+    border-top: solid 10px brown;
+    z-index: -2;
+    position: relative;
+    transform: rotate(90deg);
+    left: 600px;
+}
+
+main{
+    margin:40px auto;
+    max-width: 1440px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
