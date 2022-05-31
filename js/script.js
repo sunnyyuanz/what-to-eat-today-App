@@ -1,22 +1,42 @@
-//Something might be really related to this project which is a foodlist. 
-let foodList = [
-    { foodname: "Sushi", healthiness_score: 5, ingredients: ["salmon", "avocado", "rice", "cucumber", "seeweed"] },
-    { foodname: "Pasta", healthiness_score: 4, ingredients: ["chicken", "broccoli", "mushrooms", "tomatoes", "Alfred Sauce", "Fettuccine"] },
-    { foodname: "Burger", healthiness_score: 3.8, ingredients: ["beef", "onion", "hamburger buns", "mayonnaise", "ketchup", "lettuce leaves", "tomato"] },
-];
+//wrap foodList array in an IIFE to avoid accidentally accessing the global state. 
+//create create a new foodRepository variable to hold what my IIFE will return, then assign the IIFE to that variable.
+let foodRepository = (function(){
+    let foodList = [
+        { foodname: "Sushi", healthiness_score: 5, ingredients: ["salmon", "avocado", "rice", "cucumber", "seeweed"] },
+        { foodname: "Pasta", healthiness_score: 4, ingredients: ["chicken", "broccoli", "mushrooms", "tomatoes", "Alfred Sauce", "Fettuccine"] },
+        { foodname: "Burger", healthiness_score: 3.8, ingredients: ["beef", "onion", "hamburger buns", "mayonnaise", "ketchup", "lettuce leaves", "tomato"] },
+    ];
+
+    function add(newfood){
+        if(typeof newfood === "object"){
+        foodList.push(newfood);
+    }else{
+        console.log("This is not on object!")
+    }
+    }
+
+    function getAll(){
+        return foodList;
+    }
+
+    return{
+        add: add, 
+        getAll: getAll
+    }
+})()
 
 //Starting pull data from array to display in Html
 const food = document.querySelector(".food ul");
 let goodFood = {healthiness_score:0}
 
 //determine which food has the highest healthiness score
-foodList.forEach(food => {
+foodRepository.getAll().forEach(food => {
     if(food.healthiness_score>goodFood.healthiness_score){
         goodFood = food
     }
 })
 
-foodList.forEach(foodinfo => {
+foodRepository.getAll().forEach(foodinfo => {
     const node = document.createElement("li");
     let name = foodinfo.foodname
     let score = foodinfo.healthiness_score;
@@ -34,3 +54,4 @@ foodList.forEach(foodinfo => {
     }
     food.appendChild(node)
 })
+
