@@ -24,7 +24,41 @@ main{
     flex-direction: column;
     align-items: center;
 }
+h1{
+    font-size: 30px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.food li{
+    list-style: none;
+    padding-top: 20px;
+}
+
+.foodbutton{
+    border: none;
+    background: none;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 20px;
+}
 
 .comment{
     color: red;
+}
+
+.clicked{
+    display: none;
+}
+
+@media all and (max-width: 500px){
+    .backgroundline1,.backgroundline2{
+        border-top: solid 5px brown;
+        z-index: -1;
+    }
+    
+    .backgroundline2{
+        position: relative;
+        transform: rotate(90deg);
+        left: 170px;
+        top: 195px;
+    }
+
 }
