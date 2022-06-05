@@ -1,11 +1,26 @@
 //wrap foodList array in an IIFE to avoid accidentally accessing the global state. 
 //create create a new foodRepository variable to hold what my IIFE will return, then assign the IIFE to that variable.
 let foodRepository = (function () {
-    let foodList = [
-        { foodname: "Sushi", healthiness_score: 5, ingredients: ["salmon", "avocado", "rice", "cucumber", "seeweed"] },
-        { foodname: "Pasta", healthiness_score: 4, ingredients: ["chicken", "broccoli", "mushrooms", "tomatoes", "Alfred Sauce", "Fettuccine"] },
-        { foodname: "Burger", healthiness_score: 3.8, ingredients: ["beef", "onion", "hamburger buns", "mayonnaise", "ketchup", "lettuce leaves", "tomato"] },
-    ];
+    let foodList = [];
+    let apiUrl = "https://www.themealdb.com/api/json/v2/9973533/randomselection.php";
+
+    function LoadList(){
+        return fetch(apiUrl)
+        .then(response => response.json())
+        .then(function(json){
+            json.meals.forEach(function(item){
+                let food = {
+                    image: item.strMealThumb,
+                    name: item.strMeal,
+                    ingredients: [item.strIngredient1,item.strIngredient2,item.strIngredient3,
+                        item.strIngredient4,item.strIngredient5],
+                    tutorial: item.strYoutube                   
+                };
+                add(food);
+            });
+        }).catch(e => console.log(e));
+    }
+
 
     function add(newfood) {
         if (typeof newfood === "object") {
@@ -16,37 +31,56 @@ let foodRepository = (function () {
     }
 
     function getAll() {
+        console.log(foodList);
         return foodList;
     }
 
     function addListItem(food) {
         const ulContainer = document.querySelector(".food ul");
         const node = document.createElement("li");
-        let name = food.foodname;
-        let score = food.healthiness_score;
-        let ingredients = food.ingredients;
         const button = document.createElement('button');
-        button.innerText = name;
+        let name = food.name;
+        let image = food.image;
+        let ingredients = food.ingredients;
+        let tutorial = food.tutorial;
+        button.innerHTML = `<img src="${image}" alt="${name}">`;
+        node.appendChild(button);
+        ulContainer.appendChild(node);
+        node.classList.add("li")
         button.classList.add("foodbutton");
         const foodDetail = document.createElement('div');
+        // let score = food.healthiness_score;
+        // let ingredients = food.ingredients;
         foodDetail.innerHTML =`
-        <div>Healthiness Score: ${score}/5</div>
-        <div>Ingredients: ${ingredients}</div>
+        <h2>${name}</h2>
+        <div class="tutorial">
+        <a href="${tutorial}">Checkout the cooking video!</a>
+        </div>
+        <p>
+        <h3>Main Ingredients</h3>
+        <span>${ingredients}</span>
+        </p>    
         `;
-        foodDetail.classList.add("clicked");
-        node.appendChild(button);
         node.appendChild(foodDetail);
-        ulContainer.appendChild(node);
-        button.addEventListener("click", function (){
-            showDetails(food)
+        foodDetail.classList.add("close")      
+
+        buttonClick(button,foodDetail);
+        
+    }
+
+    function showDetails(foodDetail){
+        foodDetail.classList.toggle("open");
+        console.log(foodDetail)
+    }
+
+    function buttonClick(button,foodDetail){
+       button.addEventListener("click", function (){ 
+            showDetails(foodDetail)                    
         })
     }
 
-    function showDetails(food){
-        console.log(food)
-    }
-
     return {
+        LoadList:LoadList,
         add: add,
         getAll: getAll,
         addListItem: addListItem
@@ -57,9 +91,14 @@ let foodRepository = (function () {
 // let goodFood = { healthiness_score: 4 }
 
 //getAll the data from food list
-foodRepository.getAll().forEach(foodinfo => {
-    foodRepository.addListItem(foodinfo)
-})
+foodRepository.LoadList().then(function(){
+    foodRepository.getAll().forEach(function(food){
+        foodRepository.addListItem(food);
+    });
+});
+// .forEach(foodinfo => {
+//     foodRepository.addListItem(foodinfo)
+// })
 
 // function Checkanswersopen() {
 //     for (let i = 0; i < answers.length; i++) {
