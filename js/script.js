@@ -64,18 +64,18 @@ let foodRepository = (function () {
         node.appendChild(foodDetail);
         foodDetail.classList.add("close")      
 
-        buttonClick(button,foodDetail);
+        buttonClick(button,foodDetail,food);
         
     }
 
     function showDetails(foodDetail){
         foodDetail.classList.toggle("open");
-        console.log(foodDetail)
     }
 
-    function buttonClick(button,foodDetail){
+    function buttonClick(button,foodDetail,food){
        button.addEventListener("click", function (){ 
-            showDetails(foodDetail)                    
+            showDetails(foodDetail) 
+            console.log(food)                   
         })
     }
 
