@@ -41,18 +41,28 @@ let foodRepository = (function () {
         const button = document.createElement('button');
         let name = food.name;
         let image = food.image;
-        let ingredients = food.ingredients;
-        let tutorial = food.tutorial;
         button.innerHTML = `<img src="${image}" alt="${name}">`;
         node.appendChild(button);
         ulContainer.appendChild(node);
         node.classList.add("li")
         button.classList.add("foodbutton");
-        const foodDetail = document.createElement('div');
-        // let score = food.healthiness_score;
-        // let ingredients = food.ingredients;
-        foodDetail.innerHTML =`
+        buttonClick(button,food,name,image);
+        
+    }
+
+    function showModal(food,name,image){
+        let detailModal = document.querySelector("#detailModal-container");
+        let ingredients = food.ingredients;
+        let tutorial = food.tutorial;
+        // Clear all existing modal content
+        detailModal.innerHTML = '';
+
+        let modal = document.createElement('div');
+        modal.classList.add('modal');
+
+        modal.innerHTML = `
         <h2>${name}</h2>
+        <img src="${food.image}" alt="${name}" class="modal-img" ">
         <div class="tutorial">
         <a href="${tutorial}">Checkout the cooking video!</a>
         </div>
@@ -61,20 +71,44 @@ let foodRepository = (function () {
         <span>${ingredients}</span>
         </p>    
         `;
-        node.appendChild(foodDetail);
-        foodDetail.classList.add("close")      
 
-        buttonClick(button,foodDetail,food);
-        
+        // Add the new modal content
+        let closeButtonElement = document.createElement('button');
+        closeButtonElement.classList.add('modal-close');
+        closeButtonElement.innerText = 'Close';
+
+        modal.appendChild(closeButtonElement);
+        detailModal.appendChild(modal);
+
+        detailModal.classList.add("is-visible")
+        closModal(detailModal)
     }
 
-    function showDetails(foodDetail){
-        foodDetail.classList.toggle("open");
+    function closModal(detailModal){
+        detailModal.addEventListener('click', (e) =>{
+            let target = e.target;
+            if(target === detailModal){
+                detailModal.classList.remove("is-visible")
+            }
+        })
+
+        window.addEventListener('keydown',(e)=>{
+            if(e.key === 'Escape' && detailModal.classList.contains('is-visible')){
+                detailModal.classList.remove("is-visible")
+            }
+        })
+
+        document.querySelector(".modal-close").addEventListener('click', () =>{
+            detailModal.classList.remove("is-visible")
+
+        })
+
     }
 
-    function buttonClick(button,foodDetail,food){
-       button.addEventListener("click", function (){ 
-            showDetails(foodDetail) 
+    function buttonClick(button,food,name){
+       button.addEventListener("click", function (){
+           showModal(food,name) 
+            // showDetails(foodDetail) 
             console.log(food)                   
         })
     }
