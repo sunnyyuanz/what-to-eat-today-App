@@ -79,6 +79,7 @@ main{
     color: #777;
     text-decoration: underline;
   }
+
   
 h1{
     font-size: 30px;
@@ -126,7 +127,7 @@ li{
 }
 
 .foodbutton img{
-    width: 80%;
+    width: 100%;
 }
 
 h2{

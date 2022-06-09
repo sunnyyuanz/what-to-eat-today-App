@@ -46,11 +46,11 @@ let foodRepository = (function () {
         ulContainer.appendChild(node);
         node.classList.add("li")
         button.classList.add("foodbutton");
-        buttonClick(button,food,name,image);
+        buttonClick(button,food,name);
         
     }
 
-    function showModal(food,name,image){
+    function showModal(food,name){
         let detailModal = document.querySelector("#detailModal-container");
         let ingredients = food.ingredients;
         let tutorial = food.tutorial;
