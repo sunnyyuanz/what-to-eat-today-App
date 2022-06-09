@@ -113,6 +113,10 @@ let foodRepository = (function () {
         })
     }
 
+    document.getElementById("clickMe").addEventListener('click', () =>{
+        window.location.reload();
+    })
+
     return {
         LoadList:LoadList,
         add: add,
