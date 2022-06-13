@@ -3,6 +3,7 @@
 let foodRepository = (function () {
     let foodList = [];
     let apiUrl = "https://www.themealdb.com/api/json/v2/9973533/randomselection.php";
+    let searchValue = document.querySelector(".search").value
 
     function LoadList(){
         return fetch(apiUrl)
@@ -12,10 +13,10 @@ let foodRepository = (function () {
                 let food = {
                     image: item.strMealThumb,
                     name: item.strMeal,
-                    ingredients: [item.strIngredient1,item.strIngredient2,item.strIngredient3,
-                        item.strIngredient4,item.strIngredient5],
-                    tutorial: item.strYoutube                   
+                    ingredients: [],
+                    tutorial: item.strYoutube                
                 };
+                food.ingredients = new Array(20).fill(1).map((element, i) => item['strIngredient' + (element + i)]).filter((food) => !!food)
                 add(food);
             });
         }).catch(e => console.log(e));
