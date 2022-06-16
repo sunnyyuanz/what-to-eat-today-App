@@ -2,8 +2,10 @@
 //create create a new foodRepository variable to hold what my IIFE will return, then assign the IIFE to that variable.
 let foodRepository = (function () {
     let foodList = [];
+    let searchFood = "";
     let apiUrl = "https://www.themealdb.com/api/json/v2/9973533/randomselection.php";
-    let searchValue = document.querySelector(".search").value
+    let searchButton = document.getElementById("search")
+    
 
     function LoadList(){
         return fetch(apiUrl)
@@ -22,6 +24,35 @@ let foodRepository = (function () {
         }).catch(e => console.log(e));
     }
 
+   
+
+    searchButton.addEventListener("click", function(){
+        searchfood()
+    })
+
+    function searchfood(){
+        let searchInput = document.querySelector(".searchInput").value;
+        let searchBaseUrl = "https://www.themealdb.com/api/json/v2/9973533/search.php?s="
+        console.log("button is clicked "+searchInput);
+        if(searchInput != ""){
+        let searchApiUrl = searchBaseUrl+searchInput;
+        return fetch(searchApiUrl)
+        .then(response => response.json())
+        .then(function(json){
+            json.meals.forEach(function(item){
+                let searchFood = {
+                    image: item.strMealThumb,
+                        name: item.strMeal,
+                        ingredients: [],
+                        tutorial: item.strYoutube
+                }
+                searchFood.ingredients = new Array(20).fill(1).map((element, i) => item['strIngredient' + (element + i)]).filter((food) => !!food);
+                console.log(searchFood)
+                showModal(searchFood,searchFood.name)
+            });
+        }).catch(e => alert("Ooops, can't find this food. Please try again!"));       
+    }
+    }
 
     function add(newfood) {
         if (typeof newfood === "object") {
@@ -47,6 +78,10 @@ let foodRepository = (function () {
         ulContainer.appendChild(node);
         node.classList.add("li")
         button.classList.add("foodbutton");
+        button.classList.add("list-group-item");
+        button.classList.add("list-group-item-action");
+        button.setAttribute("data-toggle","modal")
+        node.setAttribute("role","food-button")
         buttonClick(button,food,name);
         
     }
@@ -59,18 +94,20 @@ let foodRepository = (function () {
         detailModal.innerHTML = '';
 
         let modal = document.createElement('div');
-        modal.classList.add('modal');
+        modal.classList.add('modal-content');
 
         modal.innerHTML = `
-        <h2>${name}</h2>
-        <img src="${food.image}" alt="${name}" class="modal-img" ">
-        <div class="tutorial">
+        <h2 class="modal-title" role="food-name" >${name}</h2>
+        <div class="modal-body">
+        <img src="${food.image}" alt="${name}" class="modal-img" role="food-image">
+        <div class="tutorial role="turorial-video">
         <a href="${tutorial}">Checkout the cooking video!</a>
         </div>
         <p>
-        <h3>Main Ingredients</h3>
+        <h3 role="ingredients">Main Ingredients</h3>
         <span>${ingredients}</span>
-        </p>    
+        </p>
+        </div>    
         `;
 
         // Add the new modal content
@@ -108,6 +145,7 @@ let foodRepository = (function () {
 
     function buttonClick(button,food,name){
        button.addEventListener("click", function (){
+        button.setAttribute("data-target","#exampleModal")
            showModal(food,name) 
             // showDetails(foodDetail) 
             console.log(food)                   
@@ -122,7 +160,8 @@ let foodRepository = (function () {
         LoadList:LoadList,
         add: add,
         getAll: getAll,
-        addListItem: addListItem
+        addListItem: addListItem,
+        searchfood: searchfood
     }
 })()
 
@@ -135,6 +174,9 @@ foodRepository.LoadList().then(function(){
         foodRepository.addListItem(food);
     });
 });
+
+
+
 // .forEach(foodinfo => {
 //     foodRepository.addListItem(foodinfo)
 // })

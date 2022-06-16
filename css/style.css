@@ -13,7 +13,7 @@ body{
     border-top: solid 10px brown;
     z-index: -1;
     position: relative;
-    top: 50px;
+    top: 45px;
 }
 
 .backgroundline2{
@@ -23,6 +23,29 @@ body{
     transform: rotate(90deg);
     left: 450px;
     top: 200px;
+}
+
+.searchBar{
+    display: grid;
+    grid-template-columns: 60% 1fr;
+    max-width: 60%;
+    margin-left: 130px;
+}
+
+.searchInput{
+    font-size: 0.9em;
+    border-radius: 7px;
+    border: 1px solid #808080;
+}
+#search{
+    border: none;
+    background: none;
+    max-width: 25%;
+}
+
+
+#search img{
+    max-width: 100%;
 }
 
 #clickMe{
@@ -48,44 +71,30 @@ main{
 }
 
 #detailModal-container {
-    position: fixed;
-    padding: 20px;
-    box-sizing: border-box;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    
-    /* to show it above other content */
-    z-index: 999; 
-    
-    /* to allow scrolling if the screen is not high enough*/
-    overflow: auto; 
-    
-    /* this is used to center the modal */
-    display: none;
-    text-align: center;
-  }
+    background: rgba(0, 0, 0, 0.5);  
+ } 
 
   #detailModal-container.is-visible {
     display: grid;
   }
 
-  .modal {
+  .modal-content {
     margin: auto;
-    display: inline-block;
-    box-sizing: border-box;
-    background: #fff;
     padding: 15px;
-    width: 100%;
     max-width: 700px;
-    /* text-align: left; */
-  }
+    display:inline-block;
+    text-align: center;
+    border-radius: 20px;
+ } 
+
+ .navbar{
+    position: fixed;
+ }
 
   .modal-img{
       width: 50%;
   }
+
 
   .modal-close {
     float: right;
@@ -166,6 +175,25 @@ h2{
         transform: rotate(90deg);
         left: 170px;
         top: 195px;
+    }
+
+    h1{
+        width: 30%;
+        text-align: center;
+    }
+
+    .searchBar{
+        grid-template-columns: 75% 1fr;
+        max-width: 90%;
+        margin-left: 100px;
+    }
+    
+    .searchInput{
+        font-size: 0.8em;
+    }
+
+    #search{
+        max-width: 45%;
     }
 
 }
