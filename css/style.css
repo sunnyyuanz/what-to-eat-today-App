@@ -184,7 +184,7 @@ h2{
     }
 
     .searchBar{
-        grid-template-columns: 75% 1fr;
+        grid-template-columns: 60% 1fr;
         max-width: 90%;
         margin-left: 100px;
     }
