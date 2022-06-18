@@ -82,7 +82,7 @@ main{
   .modal-content {
     margin: auto;
     padding: 15px;
-    max-width: 700px;
+    max-width: 600px;
     display:inline-block;
     text-align: center;
     border-radius: 20px;
@@ -166,7 +166,27 @@ h2{
     line-height: 30px;
 }
 
-@media all and (max-width: 500px){
+@media all and (max-width:900px) {
+    .theme{
+        margin-top: 45px;
+    }
+    
+    h1{
+        width: 30%;
+        text-align: center;
+    }
+
+    .navbar{
+        position: fixed;
+        left: 10px;
+    }
+    .backgroundline2{
+        left: 350px;
+    }
+    
+}
+
+@media all and (max-width: 650px){
     .backgroundline1,.backgroundline2{
         border-top: solid 5px brown;
         z-index: -1;
@@ -179,6 +199,10 @@ h2{
         top: 195px;
     }
 
+    .theme{
+        margin-top: 45px;
+    }
+    
     h1{
         width: 30%;
         text-align: center;
@@ -191,7 +215,7 @@ h2{
     }
     
     .searchInput{
-        font-size: 0.8em;
+        font-size: 0.7em;
     }
 
     #search{
