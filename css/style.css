@@ -27,7 +27,7 @@ body{
 
 .searchBar{
     display: grid;
-    grid-template-columns: 60% 1fr;
+    grid-template-columns: 70% 1fr;
     max-width: 60%;
     margin-left: 130px;
 }
@@ -41,11 +41,12 @@ body{
     border: none;
     background: none;
     max-width: 25%;
+    padding: 0;
 }
 
 
 #search img{
-    max-width: 100%;
+    max-width: 90%;
 }
 
 #clickMe{
@@ -194,7 +195,7 @@ h2{
     }
 
     #search{
-        max-width: 45%;
+        max-width: 30%;
     }
 
     .navbar{
